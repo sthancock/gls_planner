@@ -1,4 +1,5 @@
 # GLS Planner
+*This is currently a placeholder and will soon be updated.*
 
 A script to estimate the number of lidar satellites with different system characteristics needed to cover the world at a given spatial and temporal resolution. There is one script
 

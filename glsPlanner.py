@@ -126,14 +126,8 @@ class lidar():
 
 ##################################################
 
-def roundIt(x):
-  '''Round a number to x dp'''
-  return(round(x,-int(floor(log10(abs(x)/100)))))
- 
-##################################################
-
 def photToE(nPhot,lam=850*10**-9):
-  '''Convert photons to energy'''
+  '''Convert number of photons to energy in Joules for a given wavelength, lam'''
 
   h=6.6260755*10**-34
   c=2.998*10**8

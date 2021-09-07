@@ -12,7 +12,7 @@ S Hancock        2021
 ###########################################
 
 
-from math import pi,sqrt,log10,floor
+from math import pi,sqrt,log10,floor,log,ceil
 
 
 ###########################################
@@ -26,8 +26,18 @@ if __name__ == '__main__':
     Read commandline arguments
     '''
     p = argparse.ArgumentParser(description=("Writes out properties of GEDI waveform files"))
-    p.add_argument("--A",dest="A",type=float,default=0.4**2*pi,help=("Mirror area in m2"))
-    p.add_argument("--h",dest="h",type=float,default=400000,help=("Satellite altitude in metres"))
+    p.add_argument("--A",dest="A",type=float,default=0.4**2*pi,help=("Mirror area in m2\nDefault 0.5 m^2"))
+    p.add_argument("--alt",dest="h",type=float,default=400000,help=("Satellite altitude in metres\nDefault 400,000 m"))
+    p.add_argument("--r",dest="res",type=float,default=30,help=("Ground resoltuion in metres\nDefault 30m"))
+    p.add_argument("--Le",dest="Le",type=float,default=0.08,help=("Laser efficiency, as a fraction\nDefault 0.08"))
+    p.add_argument("--Q",dest="Q",type=float,default=0.45,help=("Detector efficiency, as a fraction\nDefault 0.45"))
+    p.add_argument("--Edet",dest="Edet",type=float,default=0.562*10**-15,help=("Amount of energy detected per shot, in Joules\Defaukt 0.562*10**-15"))
+    p.add_argument("--photDet",dest="nPhotons",type=int,default=-1,help=("Amount of energy detected per shot, in photons. Overrides Edet\nDefault: Not used"))
+    p.add_argument("--waveLen",dest="waveLen",type=float,default=850,help=("Laser wavelength in nm\ndefault 850 nm"))
+    p.add_argument("--Ppay",dest="Ppay",type=float,default=240,help=("Payload power in W\nDefault 240 W"))
+    p.add_argument("--cFrac",dest="cFrac",type=float,default=0.55,help=("Average cloud cover fraction\nDefault 0.55"))
+    p.add_argument("--obsProb",dest="obsProb",type=float,default=0.8,help=("Desired probability of a cloud free observation\nDefault 0.8"))
+    p.add_argument("--tRes",dest="tRes",type=float,default=5,help=("Time to global coverage in years\nDefault 5 years"))
     cmdargs = p.parse_args()
     return cmdargs
 
@@ -38,79 +48,81 @@ if __name__ == '__main__':
 class lidar():
   '''Object to hold lidar parameters'''
 
-  def __init__(self,A=0.5,Edet=0.281*10**-15,Le=0.08,maxP=5):
+  def __init__(self,A=0.5,Edet=0.281*10**-15,Le=0.08,res=30,h=400000,Q=0.45,Ppay=240):
     '''Initialiser'''
 
     # save parameters
     self.A=A
     self.Edet=Edet
     self.Le=Le
-    self.maxP=maxP
+    self.r=res
+    self.h=h
+    self.Q=Q
+    self.Ppay=Ppay
 
     # Universal constants
-    self.r=30
-    self.h=400000
     self.rho=0.4
     self.tau=0.8
-    self.Q=0.45
     self.R=6370000
     self.G=6.6726*10**-11
     self.M=5.98*10**24
     self.c=2.998*10**8
 
-    # pulse parameters
-    self.unambigR=150   # unambiguous range
-
-    # derived values
-    self.findEshot(self.A)
-    self.findDwellT()
-    if(maxP>0):
-      self.maxP=maxP
-    else:
-      self.maxP=self.dwellT*self.c/2
-    self.findPeakP()
-    self.goodness=self.Le/self.Edet
-
     return
 
 
   #########################
 
-  def findPeakP(self):
-    '''Find peak power'''
+  def nSatsNeeded(self,tRes=5):
+    '''Number of satellites needed for coverage within a given temporal resolution'''
+    # circumference of the Earth
+    c=2*pi*self.R
 
-    self.peakP=self.Eshot*self.unambigR/(self.maxP*self.dwellT)
+    # orbits per year per spacecraft
+    T=2*pi*sqrt((self.R+self.h)**3/(self.M*self.G))
+    pYear=2*pi*10**7/T
 
+    self.nSat=c/(self.swath*pYear*tRes)*self.cloudReps
+    self.tRes=tRes
     return
 
+  #########################
+
+  def findSwath(self):
+    '''Find satellite swath width'''
+    self.swath=(self.Ppay*self.Le/self.Edet)*(self.A/(2*pi*self.h**2))*self.Q*self.rho*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))
+    return
+
+  #########################
+
+  def cloudRepeats(self,cFrac=0.55,obsProb=0.8):
+    '''Determine nuber of repeats needed for given probability of observation through cloud'''
+    self.cloudReps=log(1-obsProb)/log(cFrac)
+    self.obsProb=obsProb
+    self.cFrac=cFrac
+    return
 
   #########################
 
   def findDwellT(self):
-    '''Find dwell time'''
+    '''Find dwell time over a pixel'''
     self.dwellT=self.r*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))
     return
 
 
   #########################
 
-  def findEshot(self,A):
-    '''Calculate energy needed per pixel'''
-
-    self.Eshot=(self.Edet/self.Q)*(2*pi*self.h**2/A)*1.0/(self.rho*self.tau**2)
-
+  def findEshot(self):
+    '''Calculate energy the laser mst emit per pixel'''
+    self.Eshot=(self.Edet/self.Q)*(2*pi*self.h**2/self.A)*1.0/(self.rho*self.tau**2)
     return
 
+  #########################
 
-  ########################
-
-  def writeThings(self,lType):
-    '''Write out results'''
-    print(lType,'peakPower',roundIt(self.peakP),'Eshot',roundIt(self.Eshot),"Edet",roundIt(self.Edet),"Le/Edet",roundIt(self.goodness*10**-15))
-
+  def writeResults(self):
+    '''Write results to screen'''
+    print("This configuration would need",ceil(self.nSat),"satellites to cover the world within",self.tRes,"years, giving a",round(self.obsProb*100,1),"% chance of viewing each point")
     return
-
-
 
 ##################################################
 
@@ -139,28 +151,24 @@ if __name__ == "__main__":
   # read command line
   cmd=readCommands()
 
-  # constants across setups
-  A=cmd.A
-  dNoiseRate=400/10**6        # dark count in counts/microsecond
-  nNoiserate=0.012-dNoiseRate  # night background light in counts/microsecond for 80 cm telescope
+  # if defined in photons, convert to Joules
+  if(cmd.nPhotons>0):
+    cmd.Edet=photToE(cmd.nPhotons,lam=cmd.waveLen*10**-9)
 
+  # set up structre
+  thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay)
 
-  # solid state
-  lSolid=lidar(A=A,Le=0.08,Edet=0.281*10**-15,maxP=400000)
-  lSolid.writeThings('Solid')
+  # derived values
+  thisLidar.findEshot()
+  thisLidar.findDwellT()
+  thisLidar.findSwath()
 
+  # determine cloud repeats
+  thisLidar.cloudRepeats(cFrac=cmd.cFrac,obsProb=cmd.obsProb)
 
-  # diode-PCL
-  lPCL=lidar(A=A,Le=0.25,Edet=photToE(cmd.photPCL),maxP=-1)
-  lPCL.writeThings('PCL')
+  # determine number of satellites needed
+  thisLidar.nSatsNeeded(tRes=cmd.tRes)
 
-
-  # diode-train
-  lTrain=lidar(A=A,Le=0.25,Edet=photToE(cmd.photTrain),maxP=5)
-  lTrain.writeThings('Ptrain')
-
-
-  totNoise=(A/(0.4**2*pi))*nNoiserate*1/0.03*(lTrain.Q/0.15)+dNoiseRate   #*481000**2/cmd.h**2
-  print("tot Noise",roundIt(totNoise),"with repeats",roundIt(totNoise*lTrain.c*lTrain.dwellT/(lTrain.unambigR*2)),'nReps',roundIt(lTrain.c*lTrain.dwellT/(lTrain.unambigR*2)))
-
+  # write results
+  thisLidar.writeResults()
 

@@ -122,6 +122,8 @@ class lidar():
   def writeResults(self):
     '''Write results to screen'''
     print("This configuration would need",ceil(self.nSat),"satellites to cover the world within",self.tRes,"years, giving a",round(self.obsProb*100,1),"% chance of viewing each point")
+    print("The satellite dwells over each pixel for",round(self.dwellT*1000,2),"ms")
+    print("The total amount of laser energy emitted per pixel must be",round(self.Eshot*1000,2),"mJ, giving a continuous operating power of",round(self.Eshot/self.dwellT,2),"J")
     return
 
 ##################################################

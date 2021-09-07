@@ -33,6 +33,8 @@ The code outputs the number of satellites needed for global coverage for the cho
 Which returns
 
     This configuration would need 20 satellites to cover the world within 5 years, giving a 80.0 % chance of viewing each point
+    The satellite dwells over each pixel for 2.08 ms
+    The total amount of laser energy emitted per pixel must be 9.76 mJ, giving a continuous operating power of 4.7 J
 
 
 ## A note on input parameters

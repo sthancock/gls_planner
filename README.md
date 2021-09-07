@@ -26,7 +26,7 @@ Command line options are:
                         0.8
     --tRes TRES         Time to global coverage in years Default 5 years
 
-The code outputs the number of satellites needed for global coverage for the chosen parameters. An example usage is:
+The code outputs the number of satellites needed for global coverage for the chosen parameters. An example usage is (in this case using the default parameters and a 15 m ground resolution):
 
     python3 glsPlanner.py --r 15
 

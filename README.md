@@ -47,3 +47,7 @@ This tool was developed for lidar mission design. The value for Edet can be foun
 The code above includes functions to estimate total laser shot energy, noise rates and instantaneous power. Note that some laser sources are not capable of supporting some of the instantaneous powers required.
 
 
+## Licensing
+
+This code is open-source, under the Gnu Public License.
+

@@ -44,7 +44,7 @@ This tool was developed for lidar mission design. The value for Edet can be foun
 
 ## A note on physical limits
 
-The code above includes functions to estimate total laser shot energy, noise rates and instantaneous power. Note that some laser sources are not capable of supporting some of the instantaneous powers required.
+The code above includes functions to estimate total laser shot energy, noise rates and power peak. Note that some laser sources are not capable of supporting some of the peak powers required.
 
 
 ## Licensing

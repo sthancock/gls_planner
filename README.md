@@ -1,5 +1,5 @@
 # Lidar Mission Planner
-This code is designed to accompany the [Hancock et al (2021)](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166) paper describing the requirements for a satellite lidar constellation with continuous ground coverage. The paper link will be added once it is accepted. The paper describes the design of a constellation of lidar satellites needed to give continuous global coverage: A Global Lidar System (GLS).
+This code is designed to accompany the [Hancock et al (2021)](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166) paper. The paper describes the design of a constellation of lidar satellites needed to give continuous global coverage: A Global Lidar System (GLS) and forms part of the UK Space Agency funded Global Lidar Altimetry MISsion (GLAMIS) project.
 
 
 [Hancock, S., McGrath, C., Lowe, C., Davenport, I. and Woodhouse, I., 2021. Requirements for a global lidar system: spaceborne lidar with wall-to-wall coverage. Royal Society Open Science, 8(12), p.211166.](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166)
@@ -33,14 +33,14 @@ Command line options are:
 
 The code outputs the number of satellites needed for global coverage for the chosen parameters, as well as the swath width per satellite. An example usage is (in this case using the default parameters and a 15 m ground resolution):
 
-    python3 glsPlanner.py --r 15
+    python3 glsPlanner.py --r 30
 
 Which returns
 
-    This configuration would need 20 satellites to cover the world within 5 years, giving a 80.0 % chance of viewing each point
-    The satellite dwells over each pixel for 2.08 ms
-    The total amount of laser energy emitted per pixel must be 9.76 mJ, giving a continuous laser output power of 4.7 W
-    The swath width is 95 m made up of 7 ground tracks
+    This configuration would need 5 satellites to cover the world within 5 years, giving a 80.0 % chance of viewing each point
+    The satellite dwells over each pixel for 4.15 ms
+    The total amount of laser energy emitted per pixel must be 9.76 mJ, giving a continuous laser output power of 2.35 W
+    The swath width is 383 m made up of 13 ground tracks
 
 
 ## A note on input parameters

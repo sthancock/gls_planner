@@ -27,6 +27,7 @@ if __name__ == '__main__':
     '''
     p = argparse.ArgumentParser(description=("Writes out properties of GEDI waveform files"))
     p.add_argument("--A",dest="A",type=float,default=0.4**2*pi,help=("Mirror area in m2\nDefault 0.5 m^2"))
+    p.add_argument("--D",dest="D",type=float,default=-1.0,help=("Telescope diameter in metres, instead of --A above\nDefault is to use area, above"))
     p.add_argument("--alt",dest="h",type=float,default=400000,help=("Satellite altitude in metres\nDefault 400,000 m"))
     p.add_argument("--r",dest="res",type=float,default=30,help=("Ground resoltuion in metres\nDefault 30m"))
     p.add_argument("--Le",dest="Le",type=float,default=0.08,help=("Laser efficiency, as a fraction\nDefault 0.08"))
@@ -151,6 +152,10 @@ if __name__ == "__main__":
   # if defined in photons, convert to Joules
   if(cmd.nPhotons>0):
     cmd.Edet=photToE(cmd.nPhotons,lam=cmd.waveLen*10**-9)
+
+  # if defined in telescope diameter, change to area
+  if(cmd.D>0.0):
+    cmd.A=pi*(cmd.D/2.0)**2
 
   # set up structre
   thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay)

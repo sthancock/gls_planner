@@ -15,6 +15,7 @@ Command line options are:
 
     -h, --help          show this help message and exit
     --A A               Mirror area in m2 Default 0.5 m^2
+    --D D               Instead of A above, mirror diameter can be defined in metres
     --alt H             Satellite altitude in metres Default 400,000 m
     --r RES             Ground resoltuion in metres Default 30m
     --Le LE             Laser efficiency, as a fraction Default 0.08
@@ -30,7 +31,7 @@ Command line options are:
                         0.8
     --tRes TRES         Time to global coverage in years Default 5 years
 
-The code outputs the number of satellites needed for global coverage for the chosen parameters. An example usage is (in this case using the default parameters and a 15 m ground resolution):
+The code outputs the number of satellites needed for global coverage for the chosen parameters, as well as the swath width per satellite. An example usage is (in this case using the default parameters and a 15 m ground resolution):
 
     python3 glsPlanner.py --r 15
 
@@ -39,6 +40,7 @@ Which returns
     This configuration would need 20 satellites to cover the world within 5 years, giving a 80.0 % chance of viewing each point
     The satellite dwells over each pixel for 2.08 ms
     The total amount of laser energy emitted per pixel must be 9.76 mJ, giving a continuous laser output power of 4.7 W
+    The swath width is 95 m made up of 7 ground tracks
 
 
 ## A note on input parameters

@@ -1,5 +1,9 @@
 # Lidar Mission Planner
-*This code is designed to accompany a paper which is currently in review. The paper link will be added once it is accepted*. The paper describes the design of a constellation of lidar satellites needed to give continuous global coverage: A Global Lidar System (GLS).
+This code is designed to accompany the [Hancock et al (2021)](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166) paper describing the requirements for a satellite lidar constellation with continuous ground coverage. The paper link will be added once it is accepted. The paper describes the design of a constellation of lidar satellites needed to give continuous global coverage: A Global Lidar System (GLS).
+
+
+[Hancock, S., McGrath, C., Lowe, C., Davenport, I. and Woodhouse, I., 2021. Requirements for a global lidar system: spaceborne lidar with wall-to-wall coverage. Royal Society Open Science, 8(12), p.211166.](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166)
+
 
 A script to estimate the number of lidar satellites with different system characteristics needed to cover the world at a given spatial and temporal resolution. There is one script
 

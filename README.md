@@ -45,7 +45,7 @@ Which returns
 
 ## A note on input parameters
 
-This tool was developed for lidar mission design. The value for Edet can be found using a lidar signal simulator, such as the [GEDI simulator](https://bitbucket.org/StevenHancock/gedisimulator). Other parameters can be found from satellite and lidar manufacturers. The defaults are based on [GEDI](https://www.sciencedirect.com/science/article/pii/S2666017220300018) and [ICESat-2](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11151/111510C/ICESat-2-mission-overview-and-early-performance/10.1117/12.2534938.short?SSO=1) and are explained in the accompanying paper (available when review is complete).
+This tool was developed for lidar mission design. The value for Edet can be found using a lidar signal simulator, such as the [GEDI simulator](https://bitbucket.org/StevenHancock/gedisimulator). Other parameters can be found from satellite and lidar manufacturers. The defaults are based on [GEDI](https://www.sciencedirect.com/science/article/pii/S2666017220300018) and [ICESat-2](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11151/111510C/ICESat-2-mission-overview-and-early-performance/10.1117/12.2534938.short?SSO=1) and are explained in the accompanying [paper](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166).
 
 
 ## A note on physical limits

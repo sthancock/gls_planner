@@ -32,7 +32,7 @@ if __name__ == '__main__':
     p.add_argument("--r",dest="res",type=float,default=30,help=("Ground resoltuion in metres\nDefault 30m"))
     p.add_argument("--Le",dest="Le",type=float,default=0.08,help=("Laser efficiency, as a fraction\nDefault 0.08"))
     p.add_argument("--Q",dest="Q",type=float,default=0.45,help=("Detector efficiency, as a fraction\nDefault 0.45"))
-    p.add_argument("--Edet",dest="Edet",type=float,default=0.562*10**-15,help=("Amount of energy detected per shot, in Joules\Defaukt 0.562*10**-15"))
+    p.add_argument("--Edet",dest="Edet",type=float,default=0.562*10**-15,help=("Amount of energy detected per shot, in Joules\Default 0.562*10**-15"))
     p.add_argument("--photDet",dest="nPhotons",type=int,default=-1,help=("Amount of energy detected per shot, in photons. Overrides Edet\nDefault: Not used"))
     p.add_argument("--waveLen",dest="waveLen",type=float,default=850,help=("Laser wavelength in nm\ndefault 850 nm"))
     p.add_argument("--Ppay",dest="Ppay",type=float,default=240,help=("Payload power in W\nDefault 240 W"))

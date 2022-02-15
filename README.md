@@ -20,7 +20,7 @@ Command line options are:
     --r RES             Ground resoltuion in metres Default 30m
     --Le LE             Laser efficiency, as a fraction Default 0.08
     --Q Q               Detector efficiency, as a fraction Default 0.45
-    --Edet EDET         Amount of energy detected per shot, in Joules\Defaukt
+    --Edet EDET         Amount of energy detected per shot, in Joules\Default
                         0.562*10**-15
     --photDet NPHOTONS  Amount of energy detected per shot, in photons.
                         Overrides Edet Default: Not used

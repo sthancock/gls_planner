@@ -12,7 +12,7 @@ S Hancock        2021
 ###########################################
 
 
-from math import pi,sqrt,log10,floor,log,ceil
+from math import pi,sqrt,log10,floor,log,ceil,cos
 
 
 ###########################################
@@ -39,6 +39,7 @@ if __name__ == '__main__':
     p.add_argument("--cFrac",dest="cFrac",type=float,default=0.55,help=("Average cloud cover fraction\nDefault 0.55"))
     p.add_argument("--obsProb",dest="obsProb",type=float,default=0.8,help=("Desired probability of a cloud free observation\nDefault 0.8"))
     p.add_argument("--tRes",dest="tRes",type=float,default=5,help=("Time to global coverage in years\nDefault 5 years"))
+    p.add_argument("--lat",dest="lat",type=float,default=0,help=("Latitude\nDefault 0 degrees"))
     cmdargs = p.parse_args()
     return cmdargs
 
@@ -74,10 +75,10 @@ class lidar():
 
   #########################
 
-  def nSatsNeeded(self,tRes=5):
+  def nSatsNeeded(self,tRes=5,lat=0):
     '''Number of satellites needed for coverage within a given temporal resolution'''
-    # circumference of the Earth
-    c=2*pi*self.R
+    # circumference of the Earth at this latitude
+    c=2*pi*self.R*cos(lat*pi/180.0)
 
     # orbits per year per spacecraft
     T=2*pi*sqrt((self.R+self.h)**3/(self.M*self.G))
@@ -169,7 +170,7 @@ if __name__ == "__main__":
   thisLidar.cloudRepeats(cFrac=cmd.cFrac,obsProb=cmd.obsProb)
 
   # determine number of satellites needed
-  thisLidar.nSatsNeeded(tRes=cmd.tRes)
+  thisLidar.nSatsNeeded(tRes=cmd.tRes,lat=cmd.lat)
 
   # write results
   thisLidar.writeResults()

@@ -30,6 +30,7 @@ Command line options are:
     --obsProb OBSPROB   Desired probability of a cloud free observation Default
                         0.8
     --tRes TRES         Time to global coverage in years Default 5 years
+    --lat LAT           Latitude Default 0 degrees
 
 The code outputs the number of satellites needed for global coverage for the chosen parameters, as well as the swath width per satellite. An example usage is (in this case using the default parameters and a 15 m ground resolution):
 

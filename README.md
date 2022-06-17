@@ -31,6 +31,8 @@ Command line options are:
                         0.8
     --tRes TRES         Time to global coverage in years Default 5 years
     --lat LAT           Latitude Default 0 degrees
+    --samp s            Spatial sampling density (0-1). Default 1
+
 
 The code outputs the number of satellites needed for global coverage for the chosen parameters, as well as the swath width per satellite. An example usage is (in this case using the default parameters and a 15 m ground resolution):
 

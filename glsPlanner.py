@@ -129,6 +129,7 @@ class lidar():
     print("The satellite dwells over each pixel for",round(self.dwellT*1000,2),"ms")
     print("The total amount of laser energy emitted per pixel must be",round(self.Eshot*1000,2),"mJ, giving a continuous laser output power of",round(self.Eshot/self.dwellT,2),"W")
     print("The swath width is",int(self.swath),"m made up of",ceil(self.swath/self.r),"ground tracks with a sampling of",100*self.samp,"%")
+    print("Mean time between overpasses is",self.tRes/self.cloudReps)
     return
 
 ##################################################

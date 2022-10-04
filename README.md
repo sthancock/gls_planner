@@ -1,7 +1,6 @@
 # Lidar Mission Planner
 This code is designed to accompany the [Hancock et al (2021)](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166) paper. The paper describes the design of a constellation of lidar satellites needed to give continuous global coverage: A Global Lidar System (GLS) and forms part of the UK Space Agency funded Global Lidar Altimetry MISsion (GLAMIS) project.
 
-
 [Hancock, S., McGrath, C., Lowe, C., Davenport, I. and Woodhouse, I., 2021. Requirements for a global lidar system: spaceborne lidar with wall-to-wall coverage. Royal Society Open Science, 8(12), p.211166.](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166)
 
 

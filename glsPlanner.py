@@ -72,6 +72,10 @@ class lidar():
     self.M=5.98*10**24
     self.c=2.998*10**8
 
+    # pulse train properties
+    self.unAmbigTime=150*2/self.c
+    self.Pwidth=5*2/self.c
+
     return
 
 
@@ -119,6 +123,8 @@ class lidar():
   def findEshot(self):
     '''Calculate energy the laser mst emit per pixel'''
     self.Eshot=(self.Edet/self.Q)*(2*pi*self.h**2/self.A)*1.0/(self.rho*self.tau**2)
+    self.nPulses=self.dwellT/self.unAmbigTime
+    self.Ppeak=(self.Eshot/self.nPulses)/self.Pwidth
     return
 
   #########################
@@ -127,6 +133,7 @@ class lidar():
     '''Write results to screen'''
     print("This configuration would need",ceil(self.nSat),"satellites to cover the world within",self.tRes,"years, giving a",round(self.obsProb*100,1),"% chance of viewing each point")
     print("The satellite dwells over each pixel for",round(self.dwellT*1000,2),"ms")
+    print("Peak power is",round(self.Ppeak,2),"W, with",round(self.nPulses,0),"pulses")
     print("The total amount of laser energy emitted per pixel must be",round(self.Eshot*1000,2),"mJ, giving a continuous laser output power of",round(self.Eshot/self.dwellT,2),"W")
     print("The swath width is",int(self.swath),"m made up of",ceil(self.swath/self.r),"ground tracks with a sampling of",100*self.samp,"%")
     print("Mean time between overpasses is",self.tRes/self.cloudReps,"years")
@@ -165,8 +172,8 @@ if __name__ == "__main__":
   thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay,samp=cmd.samp)
 
   # derived values
-  thisLidar.findEshot()
   thisLidar.findDwellT()
+  thisLidar.findEshot()
   thisLidar.findSwath()
 
   # determine cloud repeats

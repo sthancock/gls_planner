@@ -138,6 +138,7 @@ class lidar():
     print("The total amount of laser energy emitted per pixel must be",round(self.Eshot*1000,2),"mJ, giving a continuous laser output power of",round(self.Eshot/self.dwellT,2),"W")
     print("The swath width is",int(self.swath),"m made up of",ceil(self.swath/self.r),"ground tracks with a sampling of",100*self.samp,"%")
     print("Mean time between overpasses is",round(self.tRes/self.cloudReps,2),"years")
+    print("With an observation on average once every",round(self.tRes*self.cFrac,2),"years")
     return
 
 ##################################################

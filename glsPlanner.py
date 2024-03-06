@@ -101,7 +101,7 @@ class lidar():
 
   def findSwath(self):
     '''Find satellite swath width'''
-    self.swath=(self.Ppay*self.Le/self.Edet)*self.optEff*(self.A/(2*pi*self.h**2))*self.Q*self.rho*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))/self.samp
+    self.swath=(self.Ppay*self.Le/self.Edet)*self.optEff*(self.A/(pi*self.h**2))*self.Q*self.rho*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))/self.samp
     return
 
   #########################
@@ -124,8 +124,8 @@ class lidar():
   #########################
 
   def findEshot(self):
-    '''Calculate energy the laser mst emit per pixel'''
-    self.Eshot=(self.Edet/self.Q)*(2*pi*self.h**2/self.A)*1.0/(self.rho*self.tau**2)
+    '''Calculate energy the laser must emit per pixel'''
+    self.Eshot=(self.Edet/self.Q)*(pi*self.h**2/self.A)*1.0/(self.rho*self.tau**2)
     self.nPulses=self.dwellT/self.unAmbigTime
     self.Ppeak=(self.Eshot/self.nPulses)/self.Pwidth
     return

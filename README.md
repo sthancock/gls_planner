@@ -3,7 +3,7 @@ This code is designed to accompany the [Hancock et al (2021)](https://royalsocie
 
 [Hancock, S., McGrath, C., Lowe, C., Davenport, I. and Woodhouse, I., 2021. Requirements for a global lidar system: spaceborne lidar with wall-to-wall coverage. Royal Society Open Science, 8(12), p.211166.](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166)
 
-**AMEDNMENT: Note** that Hancock et al (2021) assumed isotropic reflectance wthin a hemisphere, rather than the more correct Lambertian reflectance. For Lambertian reflectance the returned energy to a detector at nadir is twice that of an isotropic reflector. The code has been modified to represent Lambertian reflectors and so will give an answer double that of the equation in the paper. The swath width equation is now:
+**AMENDMENT: Note** that Hancock et al (2021) assumed isotropic reflectance wthin a hemisphere, rather than the more correct Lambertian reflectance. For Lambertian reflectance the returned energy to a detector at nadir is twice that of an isotropic reflector. The code has been modified to represent Lambertian reflectors and so will give an answer double that of the equation in the paper. The swath width equation is now:
 
 $ s = \frac{P_{pay} L_{e}}{E_{det}} \frac{A}{\pi h^{2}} Q \rho \tau^{2} \frac{ r^{2} \left(R + h \right)^{\frac{3}{2}}}{R \sqrt{GM}} $
 

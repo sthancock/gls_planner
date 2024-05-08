@@ -139,7 +139,7 @@ class lidar():
   def writeResults(self):
     '''Write results to screen'''
 
-    if(self.nSat>=1):
+    if(self.nSat>=0):
       print("This configuration would need",ceil(self.nSat),"satellites to cover the world within",self.tRes,"years, giving a",round(self.obsProb*100,1),"% chance of viewing each point, with a geolocation accuracy of",round(self.geoErr,2),"m")
     else:
       print("The geolocation accuracy is such that this can never gaurantee global coverage.")

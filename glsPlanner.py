@@ -97,7 +97,7 @@ class lidar():
     T=2*pi*sqrt((self.R+self.h)**3/(self.M*self.G))
     pYear=2*pi*10**7/T
 
-    self.nSat=c/(self.swath*pYear*tRes)*self.cloudReps
+    self.nSat=c/((self.swath-2*self.geoErr)*pYear*tRes)*self.cloudReps
     self.tRes=tRes
     return
 
@@ -138,7 +138,12 @@ class lidar():
 
   def writeResults(self):
     '''Write results to screen'''
-    print("This configuration would need",ceil(self.nSat),"satellites to cover the world within",self.tRes,"years, giving a",round(self.obsProb*100,1),"% chance of viewing each point")
+
+    if(self.nSat>=1):
+      print("This configuration would need",ceil(self.nSat),"satellites to cover the world within",self.tRes,"years, giving a",round(self.obsProb*100,1),"% chance of viewing each point, with a geolocation accuracy of",round(self.geoErr,2),"m")
+    else:
+      print("The geolocation accuracy is such that this can never gaurantee global coverage.")
+      print("The configuration would need",ceil(self.nSat),"satellites to cover the world within",self.tRes,"years, giving a",round(self.obsProb*100,1),"% chance of viewing each point, with a geolocation accuracy of",round(self.geoErr,2),"m")
     print("The satellite dwells over each pixel for",round(self.dwellT*1000,2),"ms")
     print("Peak power is",round(self.Ppeak,2),"W, with",round(self.nPulses,0),"pulses")
     print("The total amount of laser energy emitted per pixel must be",round(self.Eshot*1000,2),"mJ, giving a continuous laser output power of",round(self.Eshot/self.dwellT,2),"W")

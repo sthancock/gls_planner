@@ -44,6 +44,7 @@ if __name__ == '__main__':
     p.add_argument("--Psigma",dest="Psigma",type=float,default=5.0,help=("pulse width in metres\nDefault 5 m"))
     p.add_argument("--optEff",dest="optEff",type=float,default=1.0,help=("Optical efficienct\nDefault 1"))
     p.add_argument("--pointErr",dest="pointErr",type=float,default=0.0,help=("Pointing error in degrees\nDefault 0"))
+    p.add_argument("--dutyCyc",dest="dutyCyc",type=float,default=1.0,help=("Duty cycle as a fraction\nDefault 1"))
     cmdargs = p.parse_args()
     return cmdargs
 
@@ -54,7 +55,7 @@ if __name__ == '__main__':
 class lidar():
   '''Object to hold lidar parameters'''
 
-  def __init__(self,A=0.5,Edet=0.281*10**-15,Le=0.08,res=30,h=400000,Q=0.45,Ppay=240,samp=1,Psigma=5,optEff=1.0,pointErr=0.0):
+  def __init__(self,A=0.5,Edet=0.281*10**-15,Le=0.08,res=30,h=400000,Q=0.45,Ppay=240,samp=1,Psigma=5,optEff=1.0,pointErr=0.0,dutyCyc=1.0):
     '''Initialiser'''
 
     # save parameters
@@ -67,6 +68,7 @@ class lidar():
     self.Ppay=Ppay
     self.samp=samp
     self.optEff=optEff
+    self.dutyCyc=dutyCyc
 
     # Universal constants
     self.rho=0.4
@@ -97,7 +99,7 @@ class lidar():
     T=2*pi*sqrt((self.R+self.h)**3/(self.M*self.G))
     pYear=2*pi*10**7/T
 
-    self.nSat=c/((self.swath-2*self.geoErr)*pYear*tRes)*self.cloudReps
+    self.nSat=(c/((self.swath-2*self.geoErr)*pYear*tRes)*self.cloudReps)/self.dutyCyc
     self.tRes=tRes
     return
 
@@ -182,7 +184,7 @@ if __name__ == "__main__":
     cmd.A=pi*(cmd.D/2.0)**2
 
   # set up structre
-  thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay,samp=cmd.samp,Psigma=cmd.Psigma,optEff=cmd.optEff,pointErr=cmd.pointErr)
+  thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay,samp=cmd.samp,Psigma=cmd.Psigma,optEff=cmd.optEff,pointErr=cmd.pointErr,dutyCyc=cmd.dutyCyc)
 
   # derived values
   thisLidar.findDwellT()

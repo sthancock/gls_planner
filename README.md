@@ -41,6 +41,7 @@ Command line options are:
     --Psigma PSIGMA     Pulse width in metres Default 5 m
     --optEff OPTEFF     Optical efficienct Default 1
     --pointErr POINTERR Pointing error in degrees Default 0
+    --dutyCyc DUTYCYC   Duty cycle as a fraction Default 1
 
 
 

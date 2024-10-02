@@ -169,6 +169,31 @@ def photToE(nPhot,lam=850*10**-9):
 
 ##################################################
 
+def runGLS(A,Edet,Le,res,h,Q,Ppay,samp,Psigma,optEff,pointErr,dutyCyc,cFrac,obsProb,tRes,lat):
+  '''Run everything for ease of learners'''
+
+  # set up structre
+  thisLidar=lidar(A=A,Edet=Edet,Le=Le,res=res,h=h,Q=Q,Ppay=Ppay,samp=samp,Psigma=Psigma,optEff=optEff,pointErr=pointErr,dutyCyc=dutyCyc)
+
+  # derived values
+  thisLidar.findDwellT()
+  thisLidar.findEshot()
+  thisLidar.findSwath()
+
+  # determine cloud repeats
+  thisLidar.cloudRepeats(cFrac=cmd.cFrac,obsProb=cmd.obsProb)
+
+  # determine number of satellites needed
+  thisLidar.nSatsNeeded(tRes=cmd.tRes,lat=cmd.lat)
+
+  # write results
+  thisLidar.writeResults()
+
+  return(thisLidar)
+
+
+##################################################
+
 if __name__ == "__main__":
   '''Main block'''
 

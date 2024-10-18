@@ -37,6 +37,7 @@ if __name__ == '__main__':
     p.add_argument("--waveLen",dest="waveLen",type=float,default=850,help=("Laser wavelength in nm\ndefault 850 nm"))
     p.add_argument("--Ppay",dest="Ppay",type=float,default=240,help=("Payload power in W\nDefault 240 W"))
     p.add_argument("--cFrac",dest="cFrac",type=float,default=0.55,help=("Average cloud cover fraction\nDefault 0.55"))
+    p.add_argument("--tau",dest="tau",type=float,default=0.8,help=("Atmospheric transmission\nnDefault 0.8"))
     p.add_argument("--obsProb",dest="obsProb",type=float,default=0.8,help=("Desired probability of a cloud free observation\nDefault 0.8"))
     p.add_argument("--tRes",dest="tRes",type=float,default=5,help=("Time to global coverage in years\nDefault 5 years"))
     p.add_argument("--lat",dest="lat",type=float,default=0,help=("Latitude\nDefault 0 degrees"))
@@ -56,7 +57,7 @@ if __name__ == '__main__':
 class lidar():
   '''Object to hold lidar parameters'''
 
-  def __init__(self,A=0.5,Edet=0.281*10**-15,Le=0.08,res=30,h=400000,Q=0.45,Ppay=240,samp=1,Psigma=5,optEff=1.0,pointErr=0.0,dutyCyc=1.0,unAmbigR=150):
+  def __init__(self,A=0.5,Edet=0.281*10**-15,Le=0.08,res=30,h=400000,Q=0.45,Ppay=240,samp=1,Psigma=5,optEff=1.0,pointErr=0.0,dutyCyc=1.0,unAmbigR=150,tau=0.8):
     '''Initialiser'''
 
     # save parameters
@@ -73,7 +74,7 @@ class lidar():
 
     # Universal constants
     self.rho=0.4
-    self.tau=0.8
+    self.tau=tau
     self.R=6370000
     self.G=6.6726*10**-11
     self.M=5.98*10**24
@@ -108,7 +109,7 @@ class lidar():
 
   def findSwath(self):
     '''Find satellite swath width'''
-    self.swath=(self.Ppay*self.Le/self.Edet)*self.optEff*(self.A/(pi*self.h**2))*self.Q*self.rho*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))/self.samp
+    self.swath=(self.Ppay*self.Le/self.Edet)*self.optEff*(self.A/(pi*self.h**2))*self.Q*self.rho*self.tau**2*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))/self.samp
     return
 
   #########################
@@ -132,7 +133,7 @@ class lidar():
 
   def findEshot(self):
     '''Calculate energy the laser must emit per pixel'''
-    self.Eshot=(self.Edet/self.Q)*(pi*self.h**2/self.A)*1.0/(self.rho*self.tau**2)
+    self.Eshot=(self.Edet/self.Q)*(pi*self.h**2/self.A)*1.0/(self.rho*self.tau**2)*1/self.optEff
     if(self.unAmbigTime>0.0):
       self.nPulses=self.dwellT/self.unAmbigTime
     else:
@@ -153,8 +154,9 @@ class lidar():
     print("The satellite dwells over each pixel for",round(self.dwellT*1000,2),"ms")
     print("Peak power is",round(self.Ppeak,2),"W, with",round(self.nPulses,0),"pulses")
     print("The total amount of laser energy emitted per pixel must be",round(self.Eshot*1000,2),"mJ, giving a continuous laser output power of",round(self.Eshot/self.dwellT,2),"W")
-    print("The swath width is",int(self.swath),"m made up of",ceil(self.samp*self.swath/self.r),"ground tracks with a sampling of",round(100*self.samp,2),"%")
+    print("The swath width is",int(self.swath),"m made up of",floor(self.samp*self.swath/self.r),"ground tracks with a sampling of",round(100*self.samp,2),"%")
     print("Mean time between overpasses is",round(self.tRes/self.cloudReps,2),"years")
+    print("Sanity power",self.Ppay,round(self.Eshot/self.dwellT*floor(self.samp*self.swath/self.r)/self.Le,2))
     #print("With an observation on average once every",round(self.tRes*self.cFrac,2),"years")
     return
 
@@ -173,11 +175,11 @@ def photToE(nPhot,lam=850*10**-9):
 
 ##################################################
 
-def runGLS(A,Edet,Le,res,h,Q,Ppay,samp,Psigma,optEff,pointErr,dutyCyc,cFrac,obsProb,tRes,lat,unAmbigR):
+def runGLS(A,Edet,Le,res,h,Q,Ppay,samp,Psigma,optEff,pointErr,dutyCyc,cFrac,obsProb,tRes,lat,unAmbigR,tau):
   '''Run everything for ease of learners'''
 
   # set up structre
-  thisLidar=lidar(A=A,Edet=Edet,Le=Le,res=res,h=h,Q=Q,Ppay=Ppay,samp=samp,Psigma=Psigma,optEff=optEff,pointErr=pointErr,dutyCyc=dutyCyc,unAmbigR=unAmbigR)
+  thisLidar=lidar(A=A,Edet=Edet,Le=Le,res=res,h=h,Q=Q,Ppay=Ppay,samp=samp,Psigma=Psigma,optEff=optEff,pointErr=pointErr,dutyCyc=dutyCyc,unAmbigR=unAmbigR,tau=tau)
 
   # derived values
   thisLidar.findDwellT()
@@ -213,7 +215,7 @@ if __name__ == "__main__":
     cmd.A=pi*(cmd.D/2.0)**2
 
   # set up structre
-  thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay,samp=cmd.samp,Psigma=cmd.Psigma,optEff=cmd.optEff,pointErr=cmd.pointErr,dutyCyc=cmd.dutyCyc,unAmbigR=cmd.unAmbigR)
+  thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay,samp=cmd.samp,Psigma=cmd.Psigma,optEff=cmd.optEff,pointErr=cmd.pointErr,dutyCyc=cmd.dutyCyc,unAmbigR=cmd.unAmbigR,tau=cmd.tau)
 
   # derived values
   thisLidar.findDwellT()

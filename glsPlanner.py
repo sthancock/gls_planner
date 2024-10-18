@@ -109,7 +109,7 @@ class lidar():
 
   def findSwath(self):
     '''Find satellite swath width'''
-    self.swath=(self.Ppay*self.Le/self.Edet)*self.optEff*(self.A/(pi*self.h**2))*self.Q*self.rho*self.tau**2*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))/self.samp
+    self.swath=(self.Ppay*self.Le/self.Edet)*self.optEff*(self.A/(pi*self.h**2))*self.Q*self.rho*self.tau**2*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))*1//self.samp
     return
 
   #########################

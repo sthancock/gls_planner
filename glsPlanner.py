@@ -98,10 +98,10 @@ class lidar():
     c=2*pi*self.R*cos(lat*pi/180.0)
 
     # orbits per year per spacecraft
-    T=2*pi*sqrt((self.R+self.h)**3/(self.M*self.G))
-    pYear=2*pi*10**7/T
+    T=2*pi*sqrt((self.R+self.h)**3/(self.M*self.G))   # time forone orbut
+    pYear=2*pi*10**7/T                                # otbits per year
 
-    self.nSat=(c/((self.swath-2*self.geoErr)*pYear*tRes)*self.cloudReps)/self.dutyCyc
+    self.nSat=(c/((self.swath-2*self.geoErr)*pYear*tRes))*self.cloudReps/self.dutyCyc
     self.tRes=tRes
     return
 
@@ -109,7 +109,7 @@ class lidar():
 
   def findSwath(self):
     '''Find satellite swath width'''
-    self.swath=(self.Ppay*self.Le/self.Edet)*self.optEff*(self.A/(pi*self.h**2))*self.Q*self.rho*self.tau**2*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))*1//self.samp
+    self.swath=(self.Ppay*self.Le/self.Edet)*self.optEff*(self.A/(pi*self.h**2))*self.Q*self.rho*self.tau**2*self.r**2*(self.R+self.h)**1.5/(self.R*sqrt(self.G*self.M))*1/self.samp
     return
 
   #########################

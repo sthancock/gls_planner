@@ -13,6 +13,7 @@ S Hancock        2021
 
 
 from math import pi,sqrt,log10,floor,log,ceil,cos,tan
+import scipy.constants as consts
 
 
 ###########################################
@@ -75,10 +76,10 @@ class lidar():
     # Universal constants
     self.rho=0.4
     self.tau=tau
-    self.R=6370000
-    self.G=6.6726*10**-11
+    self.R=6378000
+    self.G=consts.G
     self.M=5.98*10**24
-    self.c=2.998*10**8
+    self.c=consts.c
 
     # pulse train properties
     self.unAmbigTime=unAmbigR*2/self.c
@@ -98,10 +99,12 @@ class lidar():
     c=2*pi*self.R*cos(lat*pi/180.0)
 
     # orbits per year per spacecraft
-    T=2*pi*sqrt((self.R+self.h)**3/(self.M*self.G))   # time forone orbut
-    pYear=2*pi*10**7/T                                # otbits per year
+    T=2*pi*sqrt((self.R+self.h)**3/(self.M*self.G))   # time for one orbit in seconds
+    secPeryear=365.25*24*60*60  #2*pi*10**7           # seconds in a year
+    pYear=2*secPeryear/T                              # swaths at equator per year (2 crosses per orbit)
+    effSwath=self.swath-2*self.geoErr                 # swath less overlap needed
 
-    self.nSat=(c/((self.swath-2*self.geoErr)*pYear*tRes))*self.cloudReps/self.dutyCyc
+    self.nSat=(c/(effSwath*pYear*tRes))*self.cloudReps/self.dutyCyc   # number of satellites needed to see once per year through clouds at duty cycle
     self.tRes=tRes
     return
 
@@ -166,8 +169,8 @@ class lidar():
 def photToE(nPhot,lam=850*10**-9):
   '''Convert number of photons to energy in Joules for a given wavelength, lam'''
 
-  h=6.6260755*10**-34
-  c=2.998*10**8
+  h=consts.h
+  c=consts.c
 
   Edet=nPhot*h*c/lam
 

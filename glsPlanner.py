@@ -26,7 +26,7 @@ if __name__ == '__main__':
     '''
     Read commandline arguments
     '''
-    p = argparse.ArgumentParser(description=("Writes out properties of GEDI waveform files"))
+    p = argparse.ArgumentParser(description=("Determines properties of a lidar satellite constellation"))
     p.add_argument("--A",dest="A",type=float,default=0.4**2*pi,help=("Mirror area in m2\nDefault 0.5 m^2"))
     p.add_argument("--D",dest="D",type=float,default=-1.0,help=("Telescope diameter in metres, instead of --A above\nDefault is to use area, above"))
     p.add_argument("--alt",dest="h",type=float,default=400000,help=("Satellite altitude in metres\nDefault 400,000 m"))

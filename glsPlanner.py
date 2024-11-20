@@ -171,6 +171,7 @@ class lidar():
     print("The swath width is",int(self.swath),"m made up of",floor(self.samp*self.swath/self.r),"ground tracks with a sampling of",round(100*self.samp,2),"%")
     print("Mean time between overpasses is",round(self.tRes/self.cloudReps,2),"years, for cloud reps",round(self.cloudReps,2))
     print("Temporal resolution of 1 satellite is",round(self.tResOne,2),'years')
+    print("For a duty cycle of",round(self.dutyCyc*100,1),'%')
     print("\n")
     #print("Sanity power",self.Ppay,round(self.Eshot/self.dwellT*floor(self.samp*self.swath/self.r)/self.Le,2))
     #print("With an observation on average once every",round(self.tRes*self.cFrac,2),"years")

@@ -106,7 +106,18 @@ class lidar():
 
     self.nSat=(c/(effSwath*pYear*tRes))*self.cloudReps/self.dutyCyc   # number of satellites needed to see once per year through clouds at duty cycle
     self.tRes=tRes
+
+    # work out the temporal resoltuion of 1 satellite
+    self.tResOne=(c/(effSwath*pYear))*self.cloudReps/self.dutyCyc
+
     return
+
+
+  #########################
+
+  def resPerSat(self,lat=0):
+    '''Return the temporal resolution of 1 satellite'''
+
 
   #########################
 
@@ -159,6 +170,7 @@ class lidar():
     print("The total amount of laser energy emitted per pixel must be",round(self.Eshot*1000,2),"mJ, giving a continuous laser output power of",round(self.Eshot/self.dwellT,2),"W")
     print("The swath width is",int(self.swath),"m made up of",floor(self.samp*self.swath/self.r),"ground tracks with a sampling of",round(100*self.samp,2),"%")
     print("Mean time between overpasses is",round(self.tRes/self.cloudReps,2),"years, for cloud reps",round(self.cloudReps,2))
+    print("Temporal resolution of 1 satellite is",round(self.tResOne,2),'years')
     print("\n")
     #print("Sanity power",self.Ppay,round(self.Eshot/self.dwellT*floor(self.samp*self.swath/self.r)/self.Le,2))
     #print("With an observation on average once every",round(self.tRes*self.cFrac,2),"years")

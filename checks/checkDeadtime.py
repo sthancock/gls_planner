@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
   print('\n')
   print(round(expected,4),'photons are expected to arrive within the deadtime')
-  print(round(probProblem*100,3),'% is the probability of being affected by deadtime')
+  print(round(probProblem*100,3),'% is the probability of a single detector being affected by deadtime')
 
   # determine how many pixels needed to give less than a certain probability of failure
   nPix=howManyPix(expected,cmd.maxProb)

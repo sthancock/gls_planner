@@ -71,7 +71,7 @@ Input options are:
     --deadtime DEADTIME  Pixel deadtime in ns Default 2 ns
     --maxProb MAXPROB    Maximum acceptable probability of missing a photon as a fraction Default 0.02
 
-It outputs the mean number of photons expected within the dead-time, the probability that two or more will arrive within this time and the number of pixels needed to keep the probability of missing a photon less than maxProb.
+It outputs the mean number of photons expected within the dead-time, the probability that two or more will arrive within this time (which is the probability of missing photons for a single-element detector) and the number of pixels needed to keep the probability of missing a photon less than maxProb.
 
 
 ## A note on input parameters

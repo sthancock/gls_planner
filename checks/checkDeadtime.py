@@ -16,7 +16,7 @@ def readCommands():
   Read commandline arguments
   '''
   p = argparse.ArgumentParser(description=("Gives probability of not detecting all photons for a given detector dead-time and signal rate"))
-  p.add_argument("--nPhotons",dest="nPhotons",type=int,default=205,help=("Number of expected signal photons\nDefault 205"))
+  p.add_argument("--nPhotons",dest="nPhotons",type=int,default=205,help=("Number of expected signal photons per laser shot\nDefault 205"))
   p.add_argument("--window",dest="window",type=float,default=20,help=("Measurement window in metres, eg. tree height\nDefault 20 m"))
   p.add_argument("--deadtime",dest="deadtime",type=float,default=2,help=("Pixel deadtime in ns\nDefault 2 ns"))
   p.add_argument("--maxProb",dest="maxProb",type=float,default=0.02,help=("Maximum acceptable probability of missing a photon as a fraction\nDefault 0.02"))

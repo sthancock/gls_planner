@@ -66,7 +66,7 @@ All detectors should have the dead-time specified. That can be put into this scr
 
 Input options are:
 
-    --nPhotons NPHOTONS  Number of expected signal photons Default 205
+    --nPhotons NPHOTONS  Number of expected signal photons per laser shot Default 205
     --window WINDOW      Measurement window in metres, eg. tree height Default 20 m
     --deadtime DEADTIME  Pixel deadtime in ns Default 2 ns
     --maxProb MAXPROB    Maximum acceptable probability of missing a photon as a fraction Default 0.02

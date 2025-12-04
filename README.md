@@ -58,12 +58,24 @@ Which returns
 
 
 ### Dead time
+*Note that this tools is in development and not yet ready.*
 
 Photon-counting detectors offer the potential for low-noise, high sensitivity detection. However they suffer from dead-time, which will distort the signal if photons arrive too close together. This is sometimes called "first photon bias". For this reason systems like ICEsat-2 use an [array detector](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11151/111510C/ICESat-2-mission-overview-and-early-performance/10.1117/12.2534938.full). In addition to the the energy liimts above it is important to test whether a given detector will be able to measure all signal photon without deadtime effects.
 
 All detectors should have the dead-time specified. That can be put into this script to determine the number of pixel elements needed to give a 98% probability of all signal photons being detected.
 
     checks/checkDeadtime.py
+
+Input options are:
+
+    --nPhotons NPHOTONS  Number of expected signal photons Default 205
+    --window WINDOW      Measurement window in metres, eg. tree height Default 20 m
+    --deadtime DEADTIME  Pixel deadtime in ns Default 2 ns
+
+It outputs the following columns:
+
+   1) Number of pixels
+   
 
 
 

@@ -35,10 +35,13 @@ if __name__ == '__main__':
   mu=window/nPhotons            # distribtion mean. It's a Poisson so stdev=mu
   deadtime=cmd.deadtime*10**-9  # convert to seconds
 
+
+
+  meanSep=window/nPhotons
   probDeadPer=norm.cdf((deadtime-mu)/mu)
 
   # loop over number of pixels
   for nPix in range(1,100):
-    probDeadArr=1-nPhotons*probDeadPer/nPix**2   # probability that no two photons are within the dead timeof each other on the same pixel
+    probDeadArr=1-nPhotons*probDeadPer/nPix**2   # probability that no two photons are within the dead time of each other on the same pixel
     print(nPix,'ProbArrive',round(probDeadPer,4),'probAll',round(probDeadArr,2))
 

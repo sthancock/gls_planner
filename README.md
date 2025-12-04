@@ -69,8 +69,9 @@ Input options are:
     --nPhotons NPHOTONS  Number of expected signal photons Default 205
     --window WINDOW      Measurement window in metres, eg. tree height Default 20 m
     --deadtime DEADTIME  Pixel deadtime in ns Default 2 ns
+    --maxProb MAXPROB    Maximum acceptable probability of missing a photon as a fraction Default 0.02
 
-It outputs the mean number of photons expected within the dead-time and the probability that two or more will arrive within this time. A future development will determine the number of pixels needed to keep the probability of deadtime being an issue below a threshold.
+It outputs the mean number of photons expected within the dead-time, the probability that two or more will arrive within this time and the number of pixels needed to keep the probability of missing a photon less than maxProb.
 
 
 ## A note on input parameters

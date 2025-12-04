@@ -57,6 +57,17 @@ Which returns
     The swath width is 383 m made up of 13 ground tracks
 
 
+### Dead time
+
+Photon-counting detectors offer the potential for low-noise, high sensitivity detection. However they suffer from dead-time, which will distort the signal if photons arrive too close together. This is sometimes called "first photon bias". For this reason systems like ICEsat-2 use an [array detector](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11151/111510C/ICESat-2-mission-overview-and-early-performance/10.1117/12.2534938.full). In addition to the the energy liimts above it is important to test whether a given detector will be able to measure all signal photon without deadtime effects.
+
+All detectors should have the dead-time specified. That can be put into this script to determine the number of pixel elements needed to give a 98% probability of all signal photons being detected.
+
+    checks/checkDeadtime.py
+
+
+
+
 ## A note on input parameters
 
 This tool was developed for lidar mission design. The value for Edet can be found using a lidar signal simulator, such as the [GEDI simulator](https://bitbucket.org/StevenHancock/gedisimulator). Other parameters can be found from satellite and lidar manufacturers. The defaults are based on [GEDI](https://www.sciencedirect.com/science/article/pii/S2666017220300018) and [ICESat-2](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11151/111510C/ICESat-2-mission-overview-and-early-performance/10.1117/12.2534938.short?SSO=1) and are explained in the accompanying [paper](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166).

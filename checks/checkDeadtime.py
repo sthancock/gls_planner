@@ -30,10 +30,20 @@ def howManyPix(expected,maxProb):
   '''Find how many pixels are needed to give less than a prob'''
 
   nPix=1
-  while((1-poisson.cdf(1,expected/nPix))>=maxProb):
+  while(findProbMiss(expected/nPix)>=maxProb):
     nPix+=1
 
   return(nPix)
+
+
+##########################################
+
+def findProbMiss(expected):
+  '''Determine the probability of two or more photons arriving at a pixel within the deadtime'''
+
+  p=1-poisson.cdf(1,expected)
+
+  return(p)
 
 
 ##########################################
@@ -43,14 +53,15 @@ if __name__ == '__main__':
 
   # read the command line and set parameters
   cmd=readCommands()
+  # copy and convert
   nPhotons=cmd.nPhotons
-  window=cmd.window*2/c         # convert to two way time
+  window=cmd.window*2/c         # convert one-way distance to two way time
   deadtime=cmd.deadtime*10**-9  # convert to seconds
 
   # intermediate parameters
-  mu=window/nPhotons            # distribtion mean. It's a Poisson so stdev=mu
-  expected=deadtime/mu   # the expected number of photons within the deadtime
-  probProblem=1-poisson.cdf(1,expected)  # probability of more than 1 photon arriving within deadtime
+  mu=window/nPhotons                 # distribtion mean. It's a Poisson so stdev=mu
+  expected=deadtime/mu               # the expected number of photons within the deadtime at the detector
+  probProblem=findProbMiss(expected) # probability of more than 1 photon arriving within deadtime
 
   print('\n')
   print(round(expected,4),'photons are expected to arrive within the deadtime')

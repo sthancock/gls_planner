@@ -5,7 +5,7 @@ to give a short effective-dead time
 '''
 
 from scipy.constants import c
-from scipy.stats import norm,poisson
+from scipy.stats import poisson
 import argparse
 
 

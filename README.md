@@ -58,7 +58,7 @@ Which returns
 
 
 ### Dead time
-Photon-counting detectors offer the potential for low-noise, high sensitivity detection. However they suffer from dead-time, which will distort the signal if photons arrive too close together. This is sometimes called "first photon bias". For this reason systems like ICEsat-2 use an [array detector](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11151/111510C/ICESat-2-mission-overview-and-early-performance/10.1117/12.2534938.full). In addition to the the energy liimts above it is important to test whether a given detector will be able to measure all signal photon without deadtime effects.
+Photon-counting detectors offer the potential for low-noise, high sensitivity detection. However they suffer from dead-time, which will distort the signal if photons arrive too close together. This is sometimes called "first photon bias". For this reason systems like ICEsat-2 use an [array detector](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11151/111510C/ICESat-2-mission-overview-and-early-performance/10.1117/12.2534938.full). In addition to the the energy limits above it is important to test whether a given detector will be able to measure all signal photon without deadtime effects.
 
 All detectors should have the dead-time specified. That can be put into this script along with the signal to determine probability of the signal being distorted by dead-time.
 
@@ -86,5 +86,5 @@ The code above includes functions to estimate total laser shot energy, noise rat
 
 ## Licensing
 
-This code is open-source, under the Gnu Public License.
+This code is open-source, under the Gnu Public License. If the tool is useful, a citation of the [paper](https://royalsocietypublishing.org/doi/abs/10.1098/rsos.211166) would be appreciated.
 

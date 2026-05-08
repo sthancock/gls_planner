@@ -7,7 +7,7 @@ This code is designed to accompany the [Hancock et al (2021)](https://royalsocie
 
 $s = \frac{P_{pay} L_{e}}{E_{det}} \frac{A}{\pi h^{2}} Q \rho \tau^{2} \frac{ r^{2} \left(R + h \right)^{\frac{3}{2}}}{R \sqrt{GM}}$
 
-Where $s$ is swath width a lidar satellite can achieve, payload power, $P_{pay}$, laser efficiency, $L_{e}$, detected energy needed, $E_{det}$, altitude, $h$, resolution ,$r$, telescope area, $A$, detector efficiency, $Q$, surface reflectance, $\rho$, and atmospheric transmissivity, $\tau$.
+Where $s$ is swath width a lidar satellite can achieve, payload power, $P_{pay}$, laser efficiency, $L_{e}$, detected energy needed, $E_{det}$, altitude, $h$, resolution, $r$, telescope area, $A$, detector efficiency, $Q$, surface reflectance, $\rho$, and atmospheric transmissivity, $\tau$.
 
 
 

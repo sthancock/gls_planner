@@ -48,6 +48,7 @@ if __name__ == '__main__':
     p.add_argument("--pointErr",dest="pointErr",type=float,default=0.0,help=("Pointing error in degrees\nDefault 0"))
     p.add_argument("--dutyCyc",dest="dutyCyc",type=float,default=1.0,help=("Duty cycle as a fraction\nDefault 1"))
     p.add_argument("--unambiguousRange",dest="unAmbigR",type=float,default=150,help=("Maximum unambigious range \nDefault 150 m"))
+    p.add_argument("--rho",dest="rho",type=float,default=0.4,help=("Ground reflectance\nDefault 0.4"))
     cmdargs = p.parse_args()
     return cmdargs
 
@@ -58,7 +59,7 @@ if __name__ == '__main__':
 class lidar():
   '''Object to hold lidar parameters'''
 
-  def __init__(self,A=0.5,Edet=0.281*10**-15,Le=0.08,res=30,h=400000,Q=0.45,Ppay=240,samp=1,Psigma=5,optEff=1.0,pointErr=0.0,dutyCyc=1.0,unAmbigR=150,tau=0.8):
+  def __init__(self,A=0.5,Edet=0.281*10**-15,Le=0.08,res=30,h=400000,Q=0.45,Ppay=240,samp=1,Psigma=5,optEff=1.0,pointErr=0.0,dutyCyc=1.0,unAmbigR=150,tau=0.8,rho=0.4):
     '''Initialiser'''
 
     # save parameters
@@ -72,9 +73,9 @@ class lidar():
     self.samp=samp
     self.optEff=optEff
     self.dutyCyc=dutyCyc
+    self.rho=rho
 
     # Universal constants
-    self.rho=0.4
     self.tau=tau
     self.R=6378000
     self.G=consts.G
@@ -192,11 +193,11 @@ def photToE(nPhot,lam=850*10**-9):
 
 ##################################################
 
-def runGLS(A,Edet,Le,res,h,Q,Ppay,samp,Psigma,optEff,pointErr,dutyCyc,cFrac,obsProb,tRes,lat,unAmbigR,tau):
+def runGLS(A,Edet,Le,res,h,Q,Ppay,samp,Psigma,optEff,pointErr,dutyCyc,cFrac,obsProb,tRes,lat,unAmbigR,tau,rho):
   '''Run everything for ease of learners'''
 
   # set up structre
-  thisLidar=lidar(A=A,Edet=Edet,Le=Le,res=res,h=h,Q=Q,Ppay=Ppay,samp=samp,Psigma=Psigma,optEff=optEff,pointErr=pointErr,dutyCyc=dutyCyc,unAmbigR=unAmbigR,tau=tau)
+  thisLidar=lidar(A=A,Edet=Edet,Le=Le,res=res,h=h,Q=Q,Ppay=Ppay,samp=samp,Psigma=Psigma,optEff=optEff,pointErr=pointErr,dutyCyc=dutyCyc,unAmbigR=unAmbigR,tau=tau,rho=rho)
 
   # derived values
   thisLidar.findDwellT()
@@ -232,7 +233,7 @@ if __name__ == "__main__":
     cmd.A=pi*(cmd.D/2.0)**2
 
   # set up structre
-  thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay,samp=cmd.samp,Psigma=cmd.Psigma,optEff=cmd.optEff,pointErr=cmd.pointErr,dutyCyc=cmd.dutyCyc,unAmbigR=cmd.unAmbigR,tau=cmd.tau)
+  thisLidar=lidar(A=cmd.A,Edet=cmd.Edet,Le=cmd.Le,res=cmd.res,h=cmd.h,Q=cmd.Q,Ppay=cmd.Ppay,samp=cmd.samp,Psigma=cmd.Psigma,optEff=cmd.optEff,pointErr=cmd.pointErr,dutyCyc=cmd.dutyCyc,unAmbigR=cmd.unAmbigR,tau=cmd.tau,rho=cmd.rho)
 
   # derived values
   thisLidar.findDwellT()

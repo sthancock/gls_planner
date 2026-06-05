@@ -40,8 +40,12 @@ Command line options are:
     --samp s            Spatial sampling density (0-1). Default 1
     --Psigma PSIGMA     Pulse width in metres Default 5 m
     --optEff OPTEFF     Optical efficienct Default 1
+    --rho RHO           Ground reflectance Default 0.4
     --pointErr POINTERR Pointing error in degrees Default 0
     --dutyCyc DUTYCYC   Duty cycle as a fraction Default 1
+    --unambiguousRange UNAMBIGR
+                        Maximum unambigious range Default 150 m
+
 
 
 
